@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "typeRoots": ["./node_modules/@types", "./src/types"],
+        "strict": true,
+        "esModuleInterop": true,
+        "jsx": "react-jsx",
+        "target": "ESNext",
+        "module": "esnext", // Use 'es2020' or 'esnext'
+        "moduleResolution": "node",
+        "lib": ["DOM", "DOM.Iterable", "ES2022"],
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "types": ["node"]
+    },
+    "include": ["src/**/*"]
+}
