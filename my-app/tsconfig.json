@@ -10,7 +10,8 @@
         "lib": ["DOM", "DOM.Iterable", "ES2022"],
         "forceConsistentCasingInFileNames": true,
         "skipLibCheck": true,
-        "types": ["node"]
+        "types": ["node"],
+        "noEmit": true,
     },
-    "include": ["src/**/*"]
+    "include": ["src/**/*", "vite-env.d.ts"]
 }

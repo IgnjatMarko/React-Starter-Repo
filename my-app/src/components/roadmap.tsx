@@ -24,7 +24,7 @@ export default function RoadmapComponent() {
             )
             setRoadmapItems(response.documents)
         } catch (err: any) {
-            console.error('Failed to fetch roadmap items:', err)
+            //console.error('Failed to fetch roadmap items:', err)
             setError('Failed to fetch roadmap items')
         }
     }
@@ -42,7 +42,7 @@ export default function RoadmapComponent() {
             )
             setCompletedItems(response.documents)
         } catch (err: any) {
-            console.error('Failed to fetch completed items:', err)
+            //console.error('Failed to fetch completed items:', err)
             setError('Failed to fetch completed items')
         }
     }
@@ -96,15 +96,15 @@ export default function RoadmapComponent() {
         }
     }
 
-    const checkAuthentication = async () => {
-        try {
-            await account.get() // Check if the user is logged in
-            //console.log('User is authenticated:', user);
-        } catch (err) {
-            console.error('User is not authenticated:', err)
-            setErrorWithTimeout('You must be logged in to add a to-do item.')
-        }
-    }
+    // const checkAuthentication = async () => {
+    //     try {
+    //         let user = await account.get() // Check if the user is logged in
+    //         console.log('User is authenticated:', user);
+    //     } catch (err) {
+    //         console.log('User is not authenticated:', err)
+    //         setErrorWithTimeout('You must be logged in to add a to-do item.')
+    //     }
+    // }
 
     const setErrorWithTimeout = (message: string) => {
         setError(message) // Set the error message
@@ -116,7 +116,7 @@ export default function RoadmapComponent() {
     useEffect(() => {
         fetchRoadmapItems()
         fetchCompletedItems()
-        checkAuthentication()
+        //checkAuthentication()
     }, [])
 
     return (

@@ -4,12 +4,13 @@
     "type": "module",
     "scripts": {
         "start": "vite --port 3000",
-        "build": "vite build && tsc --noEmit",
+        "build": "vite build && tsc",
         "serve": "vite preview",
         "format": "npx prettier . --write",
         "lint": "npx oxlint@latest"
     },
     "dependencies": {
+        "@import-meta-env/unplugin": "^0.6.2",
         "@tailwindcss/vite": "^4.0.15",
         "@tanstack/react-query": "^5.69.0",
         "@tanstack/react-router": "^1.114.3",
@@ -22,6 +23,7 @@
     },
     "devDependencies": {
         "@eslint/js": "^9.22.0",
+        "@import-meta-env/typescript": "^0.4.0",
         "@types/node": "^22.13.11",
         "@types/react": "^19.0.8",
         "@types/react-dom": "^19.0.3",
