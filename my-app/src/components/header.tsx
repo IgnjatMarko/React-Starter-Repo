@@ -33,21 +33,32 @@ export default function HeaderComponent() {
 
     return (
         <div className="flex items-center justify-between bg-base-100 p-2 space-x-4">
-            <div className="flex-1">
-                <Link to="/" className="btn btn-ghost text-xl">
+            <div className="flex-1 flex items-center">
+                <Link
+                    to="/"
+                    className="btn btn-ghost text-xl pb-1 text-underlined"
+                >
                     {APP_INFO.short_name}
                 </Link>
             </div>
             <div className="flex-none">
                 <ul className="menu menu-horizontal px-1">
                     <li>
-                        <Link to="/roadmap">Roadmap</Link>
+                        <Link to="/roadmap" preload="intent">
+                            Roadmap
+                        </Link>
                     </li>
                     <li>
                         <Link to="/about">About</Link>
                     </li>
                     <li>
-                        <Link to="/404">404</Link>
+                        <a
+                            href="https://github.com/ignjatmarko/react-starter-repo"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            GitHub
+                        </a>
                     </li>
                     <li>
                         <div className="dropdown dropdown-bottom dropdown-end">
@@ -79,6 +90,9 @@ export default function HeaderComponent() {
                                     <a onClick={CyberpunkComponent}>
                                         Cyberpunk Theme
                                     </a>
+                                </li>
+                                <li>
+                                    <Link to="/404">404</Link>
                                 </li>
                             </ul>
                         </div>

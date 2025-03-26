@@ -17,17 +17,9 @@ To build this application for production:
 npm run build
 ```
 
-## Testing
-
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
-
-```bash
-npm run test
-```
-
 ## Styling
 
-This project uses CSS for styling.
+This project uses TailwindCSS for styling. And, DaisyUI plugin for components and themes.
 
 ## Routing
 

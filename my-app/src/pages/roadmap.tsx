@@ -1,6 +1,6 @@
 import { TODOLIST_DB_ID, ROADMAP_ID } from '../lib/appwrite' // Import Appwrite database IDs
 import { useEffect, useState } from 'react'
-import { database, account, ID } from '../lib/appwrite'
+import { database, account, ID } from '../lib/appwrite' // Import Appwrite services
 import { Query, Models, Permission, Role } from 'appwrite'
 
 interface Todo extends Models.Document {
@@ -24,8 +24,7 @@ export default function RoadmapComponent() {
             )
             setRoadmapItems(response.documents)
         } catch (err: any) {
-            //console.error('Failed to fetch roadmap items:', err)
-            setError('Failed to fetch roadmap items')
+            setError(`Failed to fetch roadmap items: ${err.message}`)
         }
     }
 
@@ -42,8 +41,7 @@ export default function RoadmapComponent() {
             )
             setCompletedItems(response.documents)
         } catch (err: any) {
-            //console.error('Failed to fetch completed items:', err)
-            setError('Failed to fetch completed items')
+            setError(`Failed to fetch completed items: ${err.message}`)
         }
     }
 
@@ -60,9 +58,8 @@ export default function RoadmapComponent() {
             )
             setRoadmapItems((prev) => [...prev, response])
             setNewItem('') // Clear input field
-        } catch (err: any) {
-            console.error('Failed to add todo:', err)
-            setErrorWithTimeout('Failed to add todo: No permission')
+        } catch {
+            setErrorWithTimeout(`Failed to add todo: No permission`)
         }
     }
 
@@ -78,8 +75,7 @@ export default function RoadmapComponent() {
             )
             setRoadmapItems((prev) => prev.filter((item) => item.$id !== id))
             setCompletedItems((prev) => [...prev, updatedItem])
-        } catch (err: any) {
-            console.error('Failed to complete todo:', err)
+        } catch {
             setErrorWithTimeout('Failed to complete todo: No permission')
         }
     }
@@ -90,21 +86,23 @@ export default function RoadmapComponent() {
             await database.deleteDocument(TODOLIST_DB_ID, ROADMAP_ID, id)
             setRoadmapItems((prev) => prev.filter((item) => item.$id !== id))
             setCompletedItems((prev) => prev.filter((item) => item.$id !== id))
-        } catch (err: any) {
-            console.error('Failed to delete todo:', err)
-            setErrorWithTimeout('Failed to delete todo: No permission')
+        } catch {
+            setErrorWithTimeout(
+                `Failed to delete todo: No permission`
+            )
         }
     }
 
-    // const checkAuthentication = async () => {
-    //     try {
-    //         let user = await account.get() // Check if the user is logged in
-    //         console.log('User is authenticated:', user);
-    //     } catch (err) {
-    //         console.log('User is not authenticated:', err)
-    //         setErrorWithTimeout('You must be logged in to add a to-do item.')
-    //     }
-    // }
+    const checkAuthentication = async () => {
+        try {
+            await account.get() // Check if the user is logged in
+            console.log('User is authenticated')
+        } catch (err: any) {
+            setErrorWithTimeout(
+                `You must be logged in to add a to-do item. ${err.message}`
+            )
+        }
+    }
 
     const setErrorWithTimeout = (message: string) => {
         setError(message) // Set the error message
@@ -116,7 +114,7 @@ export default function RoadmapComponent() {
     useEffect(() => {
         fetchRoadmapItems()
         fetchCompletedItems()
-        //checkAuthentication()
+        checkAuthentication()
     }, [])
 
     return (
@@ -139,13 +137,6 @@ export default function RoadmapComponent() {
                                                 }
                                             />
                                             {item.title}
-                                            <input
-                                                type="checkbox"
-                                                className="checkbox checkbox-xs checkbox-error"
-                                                onChange={() =>
-                                                    deleteTodo(item.$id)
-                                                }
-                                            />
                                         </p>
                                     </li>
                                 ))}
@@ -163,7 +154,7 @@ export default function RoadmapComponent() {
                                         <label className="line-through">
                                             <input
                                                 type="checkbox"
-                                                className="checkbox checkbox-xs checkbox-secondary"
+                                                className="checkbox checkbox-xs checkbox-error"
                                                 onChange={() =>
                                                     deleteTodo(item.$id)
                                                 }
@@ -193,11 +184,10 @@ export default function RoadmapComponent() {
 
                         {/* Error Message */}
                         {error && (
-                            <div
-                                role="alert"
-                                className="alert alert-error alert-soft mt-2"
-                            >
-                                <span>{error}</span>
+                            <div className="toast toast-center">
+                                <div className="alert alert-error">
+                                    <span>{error}</span>
+                                </div>
                             </div>
                         )}
                     </div>
