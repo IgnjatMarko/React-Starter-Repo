@@ -5,7 +5,7 @@ Welcome to the React Starter Repo! This repository provides a boilerplate setup 
 ## Features
 
 - **React 18**: Latest version of React.
-**Vite**: A fast, modern build tool with lightning-fast HMR and minimal setup.
+- **Vite**: A blazing fast, frontend build tool powering the next generation of web applications.
 - **Oxlint/Prettier**: Code linting and formatting tools.
 - **Hot Module Replacement**: Instant updates during development.
 - **Basic Folder Structure**: Organized for scalability.
@@ -17,20 +17,26 @@ Welcome to the React Starter Repo! This repository provides a boilerplate setup 
 1. Clone the repository:
     ```bash
     git clone https://github.com/IgnjatMarko/react-starter-repo.git
+    ```
+
+2. Access the project directory:
+    ```bash
     cd my-app
     ```
 
-2. Install dependencies:
+3. Install dependencies:
     ```bash
     npm install
     ```
 
-3. Start the development server:
+4. Rename `.env.example` file to `.env`:
+
+5. Start the development server:
     ```bash
     npm start
     ```
 
-4. Open your browser and navigate to `http://localhost:3000`.
+6. Open your browser and navigate to `http://localhost:3000`.
 
 ## Folder Structure
 
@@ -90,7 +96,8 @@ To enable authentication and allow a user to make changes to the roadmap page, f
     - Add a custom attribute or label named `role` with the value `admin`.
 
 3. **Update Your Roadmap Directly**:
-    - Ensure your application checks the user's `role` attribute to verify if they have admin privileges before making changes to the roadmap page.
+    - Ensure your Appwrite Collection checks the user's `role` attribute to verify if they have admin privileges before making changes to the roadmap page.
+    - Give permissions in the Collection settings to Guests, and anyone to `Read`, while giving Admin role the permission to `Create`,`Read`,`Update`, and `Delete`.
 
 By following these steps, you can securely manage the roadmap page.
 

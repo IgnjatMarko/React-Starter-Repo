@@ -10,7 +10,7 @@ export default function LogoCloud() {
                     <img
                         alt="Tanstack Router"
                         title="Tanstack Router"
-                        src="/tanstacklogo.png"
+                        src="https://cdn.brandfetch.io/idWcj3JjN7/w/100/h/100/theme/dark/logo.png?c=1dxbfHSJFAPEGdCLU4o5B"
                         width={158}
                         height={48}
                         className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
@@ -26,7 +26,7 @@ export default function LogoCloud() {
                     <img
                         alt="DaisyUI"
                         title="DaisyUI"
-                        src="/daisyuilogo.png"
+                        src="https://img.daisyui.com/images/daisyui-logo/daisyui-logomark.svg"
                         width={158}
                         height={48}
                         className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
@@ -42,7 +42,7 @@ export default function LogoCloud() {
                     <img
                         alt="Prettier"
                         title="Prettier"
-                        src="https://prettier.io/icon.png"
+                        src="https://cdn.brandfetch.io/idiUHgw-fJ/w/256/h/256/theme/dark/logo.png?c=1dxbfHSJFAPEGdCLU4o5B"
                         width={158}
                         height={48}
                         className="col-span-2 col-start-2 max-h-12 w-full object-contain sm:col-start-auto lg:col-span-1"

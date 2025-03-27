@@ -1,195 +1,202 @@
-import { TODOLIST_DB_ID, ROADMAP_ID } from '../lib/appwrite' // Import Appwrite database IDs
-import { useEffect, useState } from 'react'
-import { database, account, ID } from '../lib/appwrite' // Import Appwrite services
+import { TODOLIST_DB_ID, ROADMAP_ID } from '../lib/appwrite' 
+import { useState } from 'react'
+import { database, account, ID } from '../lib/appwrite' 
 import { Query, Models, Permission, Role } from 'appwrite'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 interface Todo extends Models.Document {
     title: string
-    status: string // "roadmap" or "completed"
+    status: string 
 }
 
 export default function RoadmapComponent() {
-    const [roadmapItems, setRoadmapItems] = useState<Todo[]>([])
-    const [completedItems, setCompletedItems] = useState<Todo[]>([])
     const [newItem, setNewItem] = useState<string>('')
     const [error, setError] = useState<string | null>(null)
+    const queryClient = useQueryClient()
 
-    // Fetch roadmap items
-    const fetchRoadmapItems = async () => {
-        try {
+    // Query for roadmap items
+    const { data: roadmapItems = [] } = useQuery<Todo[]>({
+        queryKey: ['todos', 'roadmap'],
+        queryFn: async () => {
             const response = await database.listDocuments<Todo>(
                 TODOLIST_DB_ID,
                 ROADMAP_ID,
                 [Query.equal('status', 'roadmap')]
             )
-            setRoadmapItems(response.documents)
-        } catch (err: any) {
-            setError(`Failed to fetch roadmap items: ${err.message}`)
+            return response.documents
         }
-    }
+    })
 
-    // Fetch completed items
-    const fetchCompletedItems = async () => {
-        try {
+    // Query for completed items
+    const { data: completedItems = [] } = useQuery<Todo[]>({
+        queryKey: ['todos', 'completed'],
+        queryFn: async () => {
             const response = await database.listDocuments<Todo>(
                 TODOLIST_DB_ID,
                 ROADMAP_ID,
                 [
                     Query.equal('status', 'completed'),
                     Query.orderDesc('$createdAt'),
-                ] // Sort by creation date in descending order
+                ] 
             )
-            setCompletedItems(response.documents)
-        } catch (err: any) {
-            setError(`Failed to fetch completed items: ${err.message}`)
+            return response.documents
         }
-    }
+    })
 
-    // Add a new item to the database
-    const addTodo = async () => {
-        if (!newItem.trim()) return
-        try {
-            const response = await database.createDocument<Todo>(
+    // Add todo mutation
+    const addTodoMutation = useMutation({
+        mutationFn: async (title: string) => {
+            return database.createDocument<Todo>(
                 TODOLIST_DB_ID,
                 ROADMAP_ID,
                 ID.unique(),
-                { title: newItem, status: 'roadmap' },
+                { title, status: 'roadmap' },
                 [Permission.write(Role.label('admin'))]
             )
-            setRoadmapItems((prev) => [...prev, response])
-            setNewItem('') // Clear input field
-        } catch {
-            setErrorWithTimeout(`Failed to add todo: No permission`)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['todos', 'roadmap'] })
+            setNewItem('')
+        },
+        onError: () => {
+            setErrorWithTimeout('Failed to add todo: No permission')
         }
-    }
+    })
 
-    // Mark an item as completed
-    const completeTodo = async (id: string) => {
-        try {
-            const updatedItem = await database.updateDocument<Todo>(
+    // Complete todo mutation
+    const completeTodoMutation = useMutation({
+        mutationFn: async (id: string) => {
+            return database.updateDocument<Todo>(
                 TODOLIST_DB_ID,
                 ROADMAP_ID,
                 id,
                 { status: 'completed' },
                 [Permission.update(Role.label('admin'))]
             )
-            setRoadmapItems((prev) => prev.filter((item) => item.$id !== id))
-            setCompletedItems((prev) => [...prev, updatedItem])
-        } catch {
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['todos', 'roadmap'] })
+            queryClient.invalidateQueries({ queryKey: ['todos', 'completed'] })
+        },
+        onError: () => {
             setErrorWithTimeout('Failed to complete todo: No permission')
         }
+    })
+
+    // Delete todo mutation
+    const deleteTodoMutation = useMutation({
+        mutationFn: async (id: string) => {
+            return database.deleteDocument(TODOLIST_DB_ID, ROADMAP_ID, id)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['todos', 'roadmap'] })
+            queryClient.invalidateQueries({ queryKey: ['todos', 'completed'] })
+        },
+        onError: () => {
+            setErrorWithTimeout('Failed to delete todo: No permission')
+        }
+    })
+
+    // Add a new item
+    const addTodo = async () => {
+        if (!newItem.trim()) return
+        addTodoMutation.mutate(newItem)
     }
 
-    // Delete an item from the database
-    const deleteTodo = async (id: string) => {
-        try {
-            await database.deleteDocument(TODOLIST_DB_ID, ROADMAP_ID, id)
-            setRoadmapItems((prev) => prev.filter((item) => item.$id !== id))
-            setCompletedItems((prev) => prev.filter((item) => item.$id !== id))
-        } catch {
-            setErrorWithTimeout(
-                `Failed to delete todo: No permission`
-            )
-        }
+    // Mark an item as completed
+    const completeTodo = (id: string) => {
+        completeTodoMutation.mutate(id)
     }
 
-    const checkAuthentication = async () => {
-        try {
-            await account.get() // Check if the user is logged in
-            console.log('User is authenticated')
-        } catch (err: any) {
-            setErrorWithTimeout(
-                `You must be logged in to add a to-do item. ${err.message}`
-            )
-        }
+    // Delete an item
+    const deleteTodo = (id: string) => {
+        deleteTodoMutation.mutate(id)
     }
 
     const setErrorWithTimeout = (message: string) => {
-        setError(message) // Set the error message
+        setError(message) 
         setTimeout(() => {
-            setError(null) // Clear the error after 5 seconds
-        }, 5000) // 5000ms = 5 seconds
+            setError(null) 
+        }, 2500) 
     }
 
-    useEffect(() => {
-        fetchRoadmapItems()
-        fetchCompletedItems()
-        checkAuthentication()
-    }, [])
-
     return (
-        <div className="hero bg-base-100 min-h-[87vh]">
-            <div className="hero-content text-center">
-                <div className="max-w-3xl flex flex-col md:flex-row gap-4">
-                    {/* Roadmap Items */}
-                    <ul className="menu bg-base-200 rounded-box md:w-1/3 sm:max-w-[400px]">
-                        <li>
-                            <h2 className="card-title">Roadmap</h2>
-                            <ul>
+        <div className="hero bg-base-100 min-h-[87vh] p-4">
+            <div className="max-w-4xl w-full">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 justify-items-center">
+                    {/* Roadmap Items Card */}
+                    <div className="card card-border border-base-200 bg-base-200 shadow-md w-full max-w-[320px]">
+                        <div className="card-body p-4">
+                            <h2 className="card-title text-center justify-center text-lg mb-3">Roadmap</h2>
+                            <div className="space-y-2">
                                 {roadmapItems.map((item) => (
-                                    <li key={item.$id}>
-                                        <p>
-                                            <input
-                                                type="checkbox"
-                                                className="checkbox checkbox-sm"
-                                                onChange={() =>
-                                                    completeTodo(item.$id)
-                                                }
-                                            />
-                                            {item.title}
-                                        </p>
-                                    </li>
+                                    <div key={item.$id} className="flex items-center gap-2 bg-base-300 border border-base-200 p-2 rounded-lg">
+                                        <input
+                                            type="checkbox"
+                                            className="checkbox checkbox-primary checkbox-xs"
+                                            onChange={() => completeTodo(item.$id)}
+                                        />
+                                        <span className="flex-1 text-left break-words text-sm">{item.title}</span>
+                                    </div>
                                 ))}
-                            </ul>
-                        </li>
-                    </ul>
+                                {roadmapItems.length === 0 && (
+                                    <div className="text-center text-base-content/60 text-sm">No items in roadmap</div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
 
-                    {/* Completed Items */}
-                    <ul className="menu bg-base-200 rounded-box md:w-1/3 sm:max-w-[400px] min-w-[200px]">
-                        <li>
-                            <h2 className="card-title">Completed</h2>
-                            <ul>
+                    {/* Completed Items Card */}
+                    <div className="card card-border bg-base-200 shadow-md w-full max-w-[320px]">
+                        <div className="card-body p-4">
+                            <h2 className="card-title text-center justify-center text-lg mb-3">Completed</h2>
+                            <div className="space-y-2">
                                 {completedItems.map((item) => (
-                                    <li key={item.$id}>
-                                        <label className="line-through">
-                                            <input
-                                                type="checkbox"
-                                                className="checkbox checkbox-xs checkbox-error"
-                                                onChange={() =>
-                                                    deleteTodo(item.$id)
-                                                }
-                                            />
-                                            {item.title}
-                                        </label>
-                                    </li>
+                                    <div key={item.$id} className="flex items-center gap-2 bg-base-300 border border-base-200 p-2 rounded-lg">
+                                        <input
+                                            type="checkbox"
+                                            className="checkbox checkbox-error checkbox-xs"
+                                            onChange={() => deleteTodo(item.$id)}
+                                        />
+                                        <span className="flex-1 text-left break-words text-sm line-through opacity-70">{item.title}</span>
+                                    </div>
                                 ))}
-                            </ul>
-                        </li>
-                    </ul>
-                    {/* Add New Item */}
-                    <div className="menu md:w-1/3 sm:max-w-[400px] min-w-[200px]">
-                        <input
-                            type="text"
-                            className="input input-bordered w-full max-w-xs"
-                            placeholder="New item"
-                            value={newItem}
-                            onChange={(e) => setNewItem(e.target.value)}
-                        />
-                        <button
-                            className="btn btn-primary mt-2"
-                            onClick={addTodo}
-                        >
-                            Add Item
-                        </button>
+                                {completedItems.length === 0 && (
+                                    <div className="text-center text-base-content/60 text-sm">No completed items</div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
 
-                        {/* Error Message */}
-                        {error && (
-                            <div className="toast toast-center">
-                                <div className="alert alert-error">
+                    {/* Add New Item Card */}
+                    <div className="card card-border bg-base-200 shadow-md w-full max-w-[320px]">
+                        <div className="card-body p-4">
+                            <h2 className="card-title text-center justify-center text-lg mb-3">Add New Item</h2>
+                            <div className="form-control">
+                                <input
+                                    type="text"
+                                    className="input input-bordered input-xs w-full text-sm"
+                                    placeholder="Enter new item"
+                                    value={newItem}
+                                    onChange={(e) => setNewItem(e.target.value)}
+                                    onKeyPress={(e) => e.key === 'Enter' && addTodo()}
+                                />
+                                <button
+                                    className="btn btn-primary btn-sm mt-3 w-full"
+                                    onClick={addTodo}
+                                    disabled={!newItem.trim()}
+                                >
+                                    Add Item
+                                </button>
+                            </div>
+
+                            {/* Error Message */}
+                            {error && (
+                                <div className="alert alert-error alert-sm mt-3 p-2 text-sm">
                                     <span>{error}</span>
                                 </div>
-                            </div>
-                        )}
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>

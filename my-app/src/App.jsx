@@ -1,4 +1,4 @@
-import LogoCloud from './utils/logo-cloud.tsx'
+import LogoCloud from './components/logo-cloud.tsx'
 import { Github } from 'lucide-react'
 
 function App() {
