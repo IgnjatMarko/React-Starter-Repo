@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router'
 import { APP_INFO } from '../assets/constants'
 
 export default function AboutComponent() {
@@ -11,7 +12,9 @@ export default function AboutComponent() {
                 <div>
                     <h1 className="text-5xl font-bold">{APP_INFO.title}</h1>
                     <p className="py-6">{APP_INFO.description}</p>
-                    <button className="btn btn-primary">Get Started</button>
+                    <Link to="/">
+                        <button className="btn btn-primary">Get Started</button>
+                    </Link>
                 </div>
             </div>
         </div>

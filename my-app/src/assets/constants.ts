@@ -3,11 +3,16 @@ type AppInfo = {
     short_name: string
     description: string
     author: string
+    email: string
+    website: string
 }
 
 export const APP_INFO: AppInfo = {
     title: 'React Starter Repo',
     short_name: 'my-app',
-    description: 'Web site created using create-tsrouter-app',
-    author: 'Marko Ignjatović',
+    description:
+        'React starter repository with an interactive roadmap page, Appwrite backend, and typesafe TanStack Router.',
+    author: 'Ignjat Marko',
+    email: 'marko@gro-build.com',
+    website: 'https://markoreact.pages.dev',
 }

@@ -1,12 +1,12 @@
-import { TODOLIST_DB_ID, ROADMAP_ID } from '../lib/appwrite' 
+import { TODOLIST_DB_ID, ROADMAP_ID } from '../lib/appwrite'
 import { useState } from 'react'
-import { database, account, ID } from '../lib/appwrite' 
+import { database, ID } from '../lib/appwrite'
 import { Query, Models, Permission, Role } from 'appwrite'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 interface Todo extends Models.Document {
     title: string
-    status: string 
+    status: string
 }
 
 export default function RoadmapComponent() {
@@ -24,7 +24,7 @@ export default function RoadmapComponent() {
                 [Query.equal('status', 'roadmap')]
             )
             return response.documents
-        }
+        },
     })
 
     // Query for completed items
@@ -37,10 +37,10 @@ export default function RoadmapComponent() {
                 [
                     Query.equal('status', 'completed'),
                     Query.orderDesc('$createdAt'),
-                ] 
+                ]
             )
             return response.documents
-        }
+        },
     })
 
     // Add todo mutation
@@ -60,7 +60,7 @@ export default function RoadmapComponent() {
         },
         onError: () => {
             setErrorWithTimeout('Failed to add todo: No permission')
-        }
+        },
     })
 
     // Complete todo mutation
@@ -80,7 +80,7 @@ export default function RoadmapComponent() {
         },
         onError: () => {
             setErrorWithTimeout('Failed to complete todo: No permission')
-        }
+        },
     })
 
     // Delete todo mutation
@@ -94,7 +94,7 @@ export default function RoadmapComponent() {
         },
         onError: () => {
             setErrorWithTimeout('Failed to delete todo: No permission')
-        }
+        },
     })
 
     // Add a new item
@@ -114,10 +114,10 @@ export default function RoadmapComponent() {
     }
 
     const setErrorWithTimeout = (message: string) => {
-        setError(message) 
+        setError(message)
         setTimeout(() => {
-            setError(null) 
-        }, 2500) 
+            setError(null)
+        }, 4000)
     }
 
     return (
@@ -127,20 +127,31 @@ export default function RoadmapComponent() {
                     {/* Roadmap Items Card */}
                     <div className="card card-border border-base-200 bg-base-200 shadow-md w-full max-w-[320px]">
                         <div className="card-body p-4">
-                            <h2 className="card-title text-center justify-center text-lg mb-3">Roadmap</h2>
+                            <h2 className="card-title text-center justify-center text-lg mb-3">
+                                Roadmap
+                            </h2>
                             <div className="space-y-2">
                                 {roadmapItems.map((item) => (
-                                    <div key={item.$id} className="flex items-center gap-2 bg-base-300 border border-base-200 p-2 rounded-lg">
+                                    <div
+                                        key={item.$id}
+                                        className="flex items-center gap-2 bg-base-300 border border-base-200 p-2 rounded-lg"
+                                    >
                                         <input
                                             type="checkbox"
                                             className="checkbox checkbox-primary checkbox-xs"
-                                            onChange={() => completeTodo(item.$id)}
+                                            onChange={() =>
+                                                completeTodo(item.$id)
+                                            }
                                         />
-                                        <span className="flex-1 text-left break-words text-sm">{item.title}</span>
+                                        <span className="flex-1 text-left break-words text-sm">
+                                            {item.title}
+                                        </span>
                                     </div>
                                 ))}
                                 {roadmapItems.length === 0 && (
-                                    <div className="text-center text-base-content/60 text-sm">No items in roadmap</div>
+                                    <div className="text-center text-base-content/60 text-sm">
+                                        No items in roadmap
+                                    </div>
                                 )}
                             </div>
                         </div>
@@ -149,20 +160,31 @@ export default function RoadmapComponent() {
                     {/* Completed Items Card */}
                     <div className="card card-border bg-base-200 shadow-md w-full max-w-[320px]">
                         <div className="card-body p-4">
-                            <h2 className="card-title text-center justify-center text-lg mb-3">Completed</h2>
+                            <h2 className="card-title text-center justify-center text-lg mb-3">
+                                Completed
+                            </h2>
                             <div className="space-y-2">
                                 {completedItems.map((item) => (
-                                    <div key={item.$id} className="flex items-center gap-2 bg-base-300 border border-base-200 p-2 rounded-lg">
+                                    <div
+                                        key={item.$id}
+                                        className="flex items-center gap-2 bg-base-300 border border-base-200 p-2 rounded-lg"
+                                    >
                                         <input
                                             type="checkbox"
                                             className="checkbox checkbox-error checkbox-xs"
-                                            onChange={() => deleteTodo(item.$id)}
+                                            onChange={() =>
+                                                deleteTodo(item.$id)
+                                            }
                                         />
-                                        <span className="flex-1 text-left break-words text-sm line-through opacity-70">{item.title}</span>
+                                        <span className="flex-1 text-left break-words text-sm line-through opacity-70">
+                                            {item.title}
+                                        </span>
                                     </div>
                                 ))}
                                 {completedItems.length === 0 && (
-                                    <div className="text-center text-base-content/60 text-sm">No completed items</div>
+                                    <div className="text-center text-base-content/60 text-sm">
+                                        No completed items
+                                    </div>
                                 )}
                             </div>
                         </div>
@@ -171,29 +193,35 @@ export default function RoadmapComponent() {
                     {/* Add New Item Card */}
                     <div className="card card-border bg-base-200 shadow-md w-full max-w-[320px]">
                         <div className="card-body p-4">
-                            <h2 className="card-title text-center justify-center text-lg mb-3">Add New Item</h2>
+                            <h2 className="card-title text-center justify-center text-lg mb-3">
+                                Add New Goal
+                            </h2>
                             <div className="form-control">
                                 <input
                                     type="text"
                                     className="input input-bordered input-xs w-full text-sm"
-                                    placeholder="Enter new item"
+                                    placeholder="Enter new goal"
                                     value={newItem}
                                     onChange={(e) => setNewItem(e.target.value)}
-                                    onKeyPress={(e) => e.key === 'Enter' && addTodo()}
+                                    onKeyPress={(e) =>
+                                        e.key === 'Enter' && addTodo()
+                                    }
                                 />
                                 <button
                                     className="btn btn-primary btn-sm mt-3 w-full"
                                     onClick={addTodo}
                                     disabled={!newItem.trim()}
                                 >
-                                    Add Item
+                                    Add Goal
                                 </button>
                             </div>
 
                             {/* Error Message */}
                             {error && (
-                                <div className="alert alert-error alert-sm mt-3 p-2 text-sm">
-                                    <span>{error}</span>
+                                <div className="toast toast-center">
+                                    <div className="alert alert-error">
+                                        <span>{error}</span>
+                                    </div>
                                 </div>
                             )}
                         </div>

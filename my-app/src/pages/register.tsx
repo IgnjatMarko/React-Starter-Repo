@@ -25,6 +25,7 @@ export default function RegisterComponent() {
             <div className="hero-content flex-col lg:flex-row-reverse">
                 <div className="card bg-base-100 w-96 shrink-0 card-border shadow-2xl">
                     <div className="card-body">
+                        <h2 className="text-2xl font-bold mb-4">Register</h2>
                         <fieldset className="fieldset">
                             <label className="fieldset-label">Name</label>
                             <input

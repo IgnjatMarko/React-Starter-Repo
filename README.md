@@ -38,6 +38,8 @@ Welcome to the React Starter Repo! This repository provides a boilerplate setup 
 
 6. Open your browser and navigate to `http://localhost:3000`.
 
+7. Use `constants.ts` in assets folder for global constants.
+
 ## Folder Structure
 
 ```
@@ -48,7 +50,7 @@ react-starter-repo/
 │   ├── pages/      # Page components
 │   ├── App.js      # Main app component
 │   └── index.js    # Entry point
-├── .eslintrc.js    # ESLint configuration
+├── .oxlintrc.js    # Oxlint configuration
 ├── .prettierrc     # Prettier configuration
 ├── package.json    # Project metadata
 └── README.md       # Project documentation
@@ -69,6 +71,7 @@ To configure the project, you need to set up environment variables. Follow these
 3. **Appwrite Account**:
     - Ensure you have an [Appwrite](https://appwrite.io/) account.
     - Use your Appwrite project credentials to populate the `.env` file.
+    - To manage the project, create database `TodoList` and collection `Roadmap`.
 
 Example `.env` file:
 ```
@@ -108,6 +111,6 @@ Contributions are welcome! Feel free to fork the repository and submit a pull re
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [CC0 1.0 Universal](LICENSE).
 
 Happy coding!

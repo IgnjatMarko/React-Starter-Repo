@@ -1,0 +1,29 @@
+{
+    "rules": {
+        "complexity": {
+            "cyclomatic": 10,
+            "npath": 200
+        },
+        "correctness": {
+            "noUnusedVariables": "error",
+            "noUnreachable": "error",
+            "noUnusedPrivateMembers": "error"
+        },
+        "style": {
+            "noNonNullAssertion": "warn",
+            "useConst": "warn",
+            "useTemplate": "warn"
+        },
+        "suspicious": {
+            "noExplicitAny": "warn",
+            "noImplicitAnyLet": "warn"
+        },
+        "security": {
+            "noDangerouslySetInnerHtml": "error"
+        },
+        "performance": {
+            "noDelete": "warn"
+        }
+    },
+    "exclude": ["node_modules", "dist", "build", "*.test.ts", "*.test.tsx"]
+}
