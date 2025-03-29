@@ -1,9 +1,9 @@
-import LogoCloud from './components/logo-cloud.tsx'
+import LogoCloud from './components/logo-cloud'
 import { Github } from 'lucide-react'
 
 function App() {
     return (
-        <div className="hero bg-base-100 min-h-[87vh]">
+        <div className="hero bg-base-100 min-h-[82vh]">
             <div className="hero-content text-center">
                 <div className="max-w-md">
                     <h1 className="text-5xl font-bold">Hello there</h1>

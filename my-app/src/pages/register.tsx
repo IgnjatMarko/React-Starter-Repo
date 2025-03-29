@@ -20,7 +20,7 @@ export default function RegisterComponent() {
     }
 
     return (
-        <div className="hero bg-base-100 min-h-screen">
+        <div className="hero bg-base-100 min-h-[82vh]">
             {error && <p className="text-red-500">{error}</p>}
             <div className="hero-content flex-col lg:flex-row-reverse">
                 <div className="card bg-base-100 w-96 shrink-0 card-border shadow-2xl">

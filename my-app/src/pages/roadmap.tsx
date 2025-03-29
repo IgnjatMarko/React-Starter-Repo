@@ -1,4 +1,4 @@
-import { TODOLIST_DB_ID, ROADMAP_ID } from '../lib/appwrite'
+import { STARTER_DB_ID, ROADMAP_ID } from '../lib/appwrite'
 import { useState } from 'react'
 import { database, ID } from '../lib/appwrite'
 import { Query, Models, Permission, Role } from 'appwrite'
@@ -19,7 +19,7 @@ export default function RoadmapComponent() {
         queryKey: ['todos', 'roadmap'],
         queryFn: async () => {
             const response = await database.listDocuments<Todo>(
-                TODOLIST_DB_ID,
+                STARTER_DB_ID,
                 ROADMAP_ID,
                 [Query.equal('status', 'roadmap')]
             )
@@ -32,7 +32,7 @@ export default function RoadmapComponent() {
         queryKey: ['todos', 'completed'],
         queryFn: async () => {
             const response = await database.listDocuments<Todo>(
-                TODOLIST_DB_ID,
+                STARTER_DB_ID,
                 ROADMAP_ID,
                 [
                     Query.equal('status', 'completed'),
@@ -47,7 +47,7 @@ export default function RoadmapComponent() {
     const addTodoMutation = useMutation({
         mutationFn: async (title: string) => {
             return database.createDocument<Todo>(
-                TODOLIST_DB_ID,
+                STARTER_DB_ID,
                 ROADMAP_ID,
                 ID.unique(),
                 { title, status: 'roadmap' },
@@ -67,7 +67,7 @@ export default function RoadmapComponent() {
     const completeTodoMutation = useMutation({
         mutationFn: async (id: string) => {
             return database.updateDocument<Todo>(
-                TODOLIST_DB_ID,
+                STARTER_DB_ID,
                 ROADMAP_ID,
                 id,
                 { status: 'completed' },
@@ -86,7 +86,7 @@ export default function RoadmapComponent() {
     // Delete todo mutation
     const deleteTodoMutation = useMutation({
         mutationFn: async (id: string) => {
-            return database.deleteDocument(TODOLIST_DB_ID, ROADMAP_ID, id)
+            return database.deleteDocument(STARTER_DB_ID, ROADMAP_ID, id)
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['todos', 'roadmap'] })
@@ -121,7 +121,7 @@ export default function RoadmapComponent() {
     }
 
     return (
-        <div className="hero bg-base-100 min-h-[87vh] p-4">
+        <div className="hero bg-base-100 min-h-[82vh] p-4">
             <div className="max-w-4xl w-full">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 justify-items-center">
                     {/* Roadmap Items Card */}
@@ -199,11 +199,11 @@ export default function RoadmapComponent() {
                             <div className="form-control">
                                 <input
                                     type="text"
-                                    className="input input-bordered input-xs w-full text-sm"
+                                    className="input input-bordered input-sm w-full text-sm"
                                     placeholder="Enter new goal"
                                     value={newItem}
                                     onChange={(e) => setNewItem(e.target.value)}
-                                    onKeyPress={(e) =>
+                                    onKeyDown={(e) =>
                                         e.key === 'Enter' && addTodo()
                                     }
                                 />

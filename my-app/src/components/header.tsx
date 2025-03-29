@@ -52,13 +52,7 @@ export default function HeaderComponent() {
                         <Link to="/about">About</Link>
                     </li>
                     <li>
-                        <a
-                            href="https://github.com/ignjatmarko/react-starter-repo"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            GitHub
-                        </a>
+                        <Link to="/blog">Blog</Link>
                     </li>
                     <li>
                         <div className="dropdown dropdown-bottom dropdown-end">

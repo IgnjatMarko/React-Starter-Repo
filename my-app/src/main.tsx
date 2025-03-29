@@ -9,17 +9,19 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
-import AboutComponent from './pages/about.tsx'
-import RoadmapComponent from './pages/roadmap.tsx'
-import LoginComponent from './pages/login.tsx'
-import RegisterComponent from './pages/register.tsx'
-import NonComponent from './pages/404.tsx'
+import AboutComponent from './pages/about'
+import BlogComponent from './pages/blog'
+import PostComponent from './pages/post'
+import RoadmapComponent from './pages/roadmap'
+import LoginComponent from './pages/login'
+import RegisterComponent from './pages/register'
+import NotFoundComponent from './pages/404'
 
 import './styles.css'
 
-import App from './App.jsx'
-import HeaderComponent from './components/header.tsx'
-import FooterComponent from './components/footer.tsx'
+import App from './App.js'
+import HeaderComponent from './components/header'
+import FooterComponent from './components/footer'
 
 import { AuthProvider } from './context/AuthContext'
 
@@ -58,6 +60,18 @@ const aboutRoute = createRoute({
     component: AboutComponent,
 })
 
+const blogRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/blog',
+    component: BlogComponent,
+})
+
+const postRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/blog/$slug', // Dynamic route for posts using slug
+    component: PostComponent,
+})
+
 const roadmapRoute = createRoute({
     getParentRoute: () => rootRoute,
     path: '/roadmap',
@@ -67,7 +81,7 @@ const roadmapRoute = createRoute({
 const nonRoute = createRoute({
     getParentRoute: () => rootRoute,
     path: '/404',
-    component: NonComponent,
+    component: NotFoundComponent,
 })
 
 const routeTree = rootRoute.addChildren([
@@ -75,6 +89,8 @@ const routeTree = rootRoute.addChildren([
     loginRoute,
     registerRoute,
     aboutRoute,
+    blogRoute,
+    postRoute,
     roadmapRoute,
     nonRoute,
 ])
@@ -86,6 +102,7 @@ const router = createRouter({
     scrollRestoration: true,
     defaultStructuralSharing: true,
     defaultPreloadStaleTime: 0,
+    defaultNotFoundComponent: NotFoundComponent,
 })
 
 const queryClient = new QueryClient({
