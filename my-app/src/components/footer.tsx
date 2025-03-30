@@ -6,7 +6,7 @@ export default function FooterComponent() {
         <footer className="footer sm:footer-horizontal footer-center bg-base-100 text-base-content p-4 text-base">
             <aside>
                 <p className="flex items-center gap-2">
-                    {new Date().getFullYear()} © Built by{' '}
+                    {new Date().getFullYear()} ©
                     <a
                         className="link link-hover flex items-center gap-2"
                         href={

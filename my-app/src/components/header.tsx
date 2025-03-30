@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import { Link } from '@tanstack/react-router'
 import { account } from '../lib/appwrite'
 import LightComponent, { CyberpunkComponent } from '../utils/themes'
+import { ArrowDown } from 'lucide-react'
 
 export default function HeaderComponent() {
     const { isLoggedIn, setIsLoggedIn } = useAuth()
@@ -56,8 +57,13 @@ export default function HeaderComponent() {
                     </li>
                     <li>
                         <div className="dropdown dropdown-bottom dropdown-end">
-                            <div tabIndex={0} role="button">
-                                Settings ⬇️
+                            <div
+                                tabIndex={0}
+                                role="button"
+                                className="flex items-center space-x-1"
+                            >
+                                <span>Settings</span>
+                                <ArrowDown className="w-4 h-4" />
                             </div>
                             <ul
                                 tabIndex={0}

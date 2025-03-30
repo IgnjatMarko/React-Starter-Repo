@@ -1,4 +1,4 @@
-# React Starter Repo v1.1.0
+# React Starter Repo v1.1.01
 
 Welcome to the React Starter Repo! This repository provides a boilerplate setup for starting your React projects quickly and efficiently.
 
@@ -10,7 +10,7 @@ Welcome to the React Starter Repo! This repository provides a boilerplate setup 
 - **DaisyUI**: Faster, cleaner, easier Tailwind CSS development
 - **Appwrite**: Build your entire backend within minutes and scale effortlessly using Appwrite's platform.
 - **Oxlint/Prettier**: Code linting and formatting tools.
-- **Lucide**: Beautiful & consistent icons
+- **Lucide**: Beautiful & consistent icons. Made by the community.
 
 ## Getting Started
 
@@ -64,7 +64,7 @@ To configure the project, you need to set up environment variables. Follow these
 
 1. **Create a `.env` file**:
     - Locate the `.env.example` file in the root directory.
-    - Rename it to `.env`.
+    - Copy and rename it to `.env`.
 
 2. **Fill in the required values**:
     - Open the `.env` file in a text editor.
@@ -108,10 +108,15 @@ To enable authentication and allow a user to make changes to the roadmap page, f
     - By following these steps, you can securely manage the roadmap page.
 
 4. **Blog Setup**:
+    - After creating the collection, follow the next steps.
     - Create attributes `title`, `content`, `slug`, and `author` strings which are required.
     - Give permission in the Collection settings to `Any` for anyone to `Read`. No CRUD required.
     - Admin user to create blog posts directly inside the Appwrite collection.
 
+
+## Build and Deployment
+
+When deploying, do not forget to copy Environment Variables to your host of choice, `my-app` is the Root Directory, and `dist` is the Output Directory for Vite Frameworks.
 
 ## Contributing
 

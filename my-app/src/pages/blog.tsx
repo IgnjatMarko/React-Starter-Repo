@@ -70,7 +70,7 @@ export default function BlogComponent() {
     return (
         <div className="min-h-[82vh] bg-base-100 py-12">
             <div className="max-w-4xl mx-auto px-4">
-                <h1 className="text-5xl font-bold text-center mb-16 text-accent">Articles</h1>
+                <h1 className="text-5xl font-bold text-center mb-16 text-accent">Blogspot</h1>
                 {posts.length > 0 ? (
                     <div className="space-y-10">
                         {posts.map((post) => (

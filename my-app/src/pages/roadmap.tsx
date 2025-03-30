@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { database, ID } from '../lib/appwrite'
 import { Query, Models, Permission, Role } from 'appwrite'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { Mail } from 'lucide-react'
+import { APP_INFO } from '../assets/constants'
 
 interface Todo extends Models.Document {
     title: string
@@ -214,6 +216,18 @@ export default function RoadmapComponent() {
                                 >
                                     Add Goal
                                 </button>
+                                <p className='py-2 text-sm text-base-content/70'>
+                                    Suggest goals directly to the team via email:
+                                    <a
+                                        className="link link-primary flex items-center gap-2"
+                                        href={`mailto:${APP_INFO.email}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        <Mail className="w-4 h-4" />
+                                        {APP_INFO.email}
+                                    </a>
+                                </p>
                             </div>
 
                             {/* Error Message */}
