@@ -216,8 +216,9 @@ export default function RoadmapComponent() {
                                 >
                                     Add Goal
                                 </button>
-                                <p className='py-2 text-sm text-base-content/70'>
-                                    Suggest goals directly to the team via email:
+                                <p className="py-2 text-sm text-base-content/70">
+                                    Suggest goals directly to the team via
+                                    email:
                                     <a
                                         className="link link-primary flex items-center gap-2"
                                         href={`mailto:${APP_INFO.email}`}

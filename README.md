@@ -58,6 +58,41 @@ react-starter-repo/
 └── README.md       # Project documentation
 ```
 
+## Appwrite Integration
+
+**Create a Web App**:
+- Log in to your [Appwrite Console](https://appwrite.io/).
+- Navigate to the **Projects** section and create a new project.
+- Choose a hostname that matches the domain your website will use after deployment (e.g., Vercel, Netlify, Cloudflare).
+- Proceed through the setup wizard by clicking "Next" on each step.
+
+### Appwrite Authentication, Roadmap, and Blog Setup
+
+To enable authentication and allow a user to make changes to the roadmap page, follow these steps:
+
+1. **Create a New User**:
+    - Log in to your [Appwrite Console](https://appwrite.io/).
+    - Navigate to the **Auth/Users** section.
+    - Click on **Add User** and fill in the required details (email and password).
+    - Or create it through the dev build
+
+2. **Assign the 'admin' Label**:
+    - After creating the user, go to the **Auth/Users** section and select the newly created user.
+    - Add a custom attribute or label named `role` with the value `admin`.
+
+3. **Databases Roadmap Setup**:
+    - In the settings, ensure your Appwrite Collection checks the user's `role` attribute to verify if they have admin privileges before making changes to the roadmap page.
+    - Give permissions in the Collection settings to <ins>Guests</ins>, and <ins>Any</ins> to `Read`, while giving <ins>admin</ins> role the permission to `Create`,`Read`,`Update`, and `Delete`.
+    - Create attributes `title` and `status` (default: `roadmap`) strings.
+    - By following these steps, you can securely manage the roadmap page.
+
+4. **Databases Blogspot Setup**:
+    - After creating the collection, follow the next steps.
+    - Create attributes `title`, `content`, `slug`, and `author` strings which are required.
+    - Give permission in the Collection settings to `Any` for anyone to `Read`. No CRUD required.
+    - Admin user to create blog posts directly inside the Appwrite collection.
+
+
 ### Setting Up Environment Variables
 
 To configure the project, you need to set up environment variables. Follow these steps:
@@ -77,7 +112,7 @@ To configure the project, you need to set up environment variables. Follow these
 
 Example `.env` file:
 ```
-VITE_APPWRITE_ENDPOINT=https://your-appwrite-endpoint
+VITE_APPWRITE_ENDPOINT=https://cloud.appwrite.io/v1 # Appwrite endpoint
 VITE_APPWRITE_PROJECT_ID=your-appwrite-project-id
 VITE_STARTER_DB_ID=your-appwrite-database-id
 VITE_ROADMAP_ID=your-appwrite-collection-Roadmap-id
@@ -85,33 +120,6 @@ VITE_BLOGSPOT_DB_ID=your-appwrite-collection-Blogspot-id
 ```
 
 Make sure not to commit your `.env` file to version control to keep sensitive information secure.
-
-
-### Appwrite Authentication, Roadmap, and Blog Setup
-
-To enable authentication and allow a user to make changes to the roadmap page, follow these steps:
-
-1. **Create a New User**:
-    - Log in to your [Appwrite Console](https://appwrite.io/).
-    - Navigate to the **Users** section.
-    - Click on **Add User** and fill in the required details (email and password).
-    - Or create it through the dev build
-
-2. **Assign the 'admin' Label**:
-    - After creating the user, go to the **Users** section and select the newly created user.
-    - Add a custom attribute or label named `role` with the value `admin`.
-
-3. **Update Your Roadmap Directly**:
-    - Ensure your Appwrite Collection checks the user's `role` attribute to verify if they have admin privileges before making changes to the roadmap page.
-    - Give permissions in the Collection settings to Guests, and anyone to `Read`, while giving Admin role the permission to `Create`,`Read`,`Update`, and `Delete`.
-    - Create attributes `title` and `status` (default: `roadmap`) strings.
-    - By following these steps, you can securely manage the roadmap page.
-
-4. **Blog Setup**:
-    - After creating the collection, follow the next steps.
-    - Create attributes `title`, `content`, `slug`, and `author` strings which are required.
-    - Give permission in the Collection settings to `Any` for anyone to `Read`. No CRUD required.
-    - Admin user to create blog posts directly inside the Appwrite collection.
 
 
 ## Build and Deployment

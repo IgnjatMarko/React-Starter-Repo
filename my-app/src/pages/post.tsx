@@ -39,7 +39,8 @@ export default function PostComponent() {
                 setPost(null)
             }
         } catch (err) {
-            const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred'
+            const errorMessage =
+                err instanceof Error ? err.message : 'An unknown error occurred'
             console.error('Error fetching post:', err)
             setError(errorMessage)
         } finally {
@@ -79,24 +80,29 @@ export default function PostComponent() {
         <article className="min-h-[82vh] bg-base-100 py-12">
             <div className="max-w-3xl mx-auto px-4">
                 <header className="mb-12 text-center">
-                    <h1 className="text-5xl font-bold mb-6 text-accent">{post.title}</h1>
+                    <h1 className="text-5xl font-bold mb-6 text-accent">
+                        {post.title}
+                    </h1>
                     <div className="flex justify-center items-center gap-4 text-sm text-base-content/70">
                         <span className="font-medium">By {post.author}</span>
                         <span>•</span>
-                        <span>{format(new Date(post.$createdAt), 'MMMM d, yyyy')}</span>
+                        <span>
+                            {format(new Date(post.$createdAt), 'MMMM d, yyyy')}
+                        </span>
                     </div>
                 </header>
-                
+
                 <div className={markdownStyles.content}>
-                    <ReactMarkdown
-                        components={markdownComponents}>
+                    <ReactMarkdown components={markdownComponents}>
                         {post.content}
                     </ReactMarkdown>
                 </div>
 
                 <footer className="mt-16 flex justify-center">
                     <Link to="/blog">
-                        <button className="btn btn-outline btn-wide">← Back to Blog</button>
+                        <button className="btn btn-outline btn-wide">
+                            ← Back to Blog
+                        </button>
                     </Link>
                 </footer>
             </div>
