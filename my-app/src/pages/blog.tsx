@@ -4,6 +4,7 @@ import { Models, Query } from 'appwrite'
 import { Link } from '@tanstack/react-router'
 import { format } from 'date-fns'
 import ReactMarkdown from 'react-markdown'
+import { markdownStyles, markdownComponents } from '../styles/markdown'
 
 // Type for blog post document
 interface BlogPost extends Models.Document {
@@ -71,7 +72,7 @@ export default function BlogComponent() {
     }
 
     return (
-        <div className="min-h-[82vh] bg-base-100 py-12">
+        <div className="min-h-layout bg-base-100 py-12">
             <div className="max-w-4xl mx-auto px-4">
                 <h1 className="text-5xl font-bold text-center mb-16 text-accent">
                     Blogspot
@@ -87,9 +88,9 @@ export default function BlogComponent() {
                                     <h2 className="card-title text-3xl font-bold mb-4 text-accent">
                                         {post.title}
                                     </h2>
-                                    <div className="prose prose-lg prose-headings:mt-0 prose-p:my-0 prose-ul:my-0 prose-ol:my-0 prose-ul:list-disc prose-ol:list-decimal">
+                                    <div className={`prose prose-lg prose-headings:mt-0 prose-p:my-0 prose-ul:my-0 prose-ol:my-0 prose-ul:list-disc prose-ol:list-decimal ` + markdownStyles}>
                                         <div className="text-base-content/80 text-lg leading-relaxed line-clamp-3 mb-6">
-                                            <ReactMarkdown>
+                                            <ReactMarkdown components={markdownComponents}>
                                                 {truncateText(post.content)}
                                             </ReactMarkdown>
                                         </div>

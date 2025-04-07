@@ -123,7 +123,7 @@ export default function RoadmapComponent() {
     }
 
     return (
-        <div className="hero bg-base-100 min-h-[82vh] p-4">
+        <div className="hero bg-base-100 min-h-layout p-4">
             <div className="max-w-4xl w-full">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 justify-items-center">
                     {/* Roadmap Items Card */}

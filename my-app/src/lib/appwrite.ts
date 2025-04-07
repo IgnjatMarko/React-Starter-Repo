@@ -13,5 +13,6 @@ export const database: Databases = new Databases(client)
 export const STARTER_DB_ID = import.meta.env.VITE_STARTER_DB_ID // Use environment variables
 export const ROADMAP_ID = import.meta.env.VITE_ROADMAP_ID
 export const BLOGSPOT_ID = import.meta.env.VITE_BLOGSPOT_ID
+export const SUBSCRIBERS_ID = import.meta.env.VITE_SUBSCRIBERS_ID
 
 export { ID } from 'appwrite'

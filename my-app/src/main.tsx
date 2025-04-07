@@ -1,3 +1,4 @@
+import { inject } from '@vercel/analytics'
 import {
     Outlet,
     RouterProvider,
@@ -24,6 +25,9 @@ import HeaderComponent from './components/header'
 import FooterComponent from './components/footer'
 
 import { AuthProvider } from './context/AuthContext'
+
+// Initialize Vercel Analytics
+inject()
 
 const rootRoute = createRootRoute({
     component: () => (

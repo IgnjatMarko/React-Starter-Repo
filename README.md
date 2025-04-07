@@ -74,7 +74,6 @@ To enable authentication and allow a user to make changes to the roadmap page, f
     - Log in to your [Appwrite Console](https://appwrite.io/).
     - Navigate to the **Auth/Users** section.
     - Click on **Add User** and fill in the required details (email and password).
-    - Or create it through the dev build
 
 2. **Assign the 'admin' Label**:
     - After creating the user, go to the **Auth/Users** section and select the newly created user.
@@ -121,6 +120,10 @@ VITE_BLOGSPOT_DB_ID=your-appwrite-collection-Blogspot-id
 
 Make sure not to commit your `.env` file to version control to keep sensitive information secure.
 
+
+## Tips
+
+Do not forget to run scripts `npm run lint` and `npm run format` to check your code and format it.
 
 ## Build and Deployment
 

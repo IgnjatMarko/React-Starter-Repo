@@ -50,7 +50,7 @@ export default function PostComponent() {
 
     if (loading) {
         return (
-            <div className="min-h-[82vh] flex items-center justify-center">
+            <div className="min-h-layout flex items-center justify-center">
                 <div className="loading loading-spinner loading-lg text-primary"></div>
             </div>
         )
@@ -58,7 +58,7 @@ export default function PostComponent() {
 
     if (error) {
         return (
-            <div className="min-h-[82vh] flex items-center justify-center p-4">
+            <div className="min-h-layout flex items-center justify-center p-4">
                 <div className="alert alert-error max-w-lg">
                     <span>Error loading post: {error}</span>
                 </div>
@@ -68,7 +68,7 @@ export default function PostComponent() {
 
     if (!post) {
         return (
-            <div className="min-h-[82vh] flex items-center justify-center p-4">
+            <div className="min-h-layout flex items-center justify-center p-4">
                 <div className="alert alert-warning max-w-lg">
                     <span>Post not found.</span>
                 </div>
@@ -77,7 +77,7 @@ export default function PostComponent() {
     }
 
     return (
-        <article className="min-h-[82vh] bg-base-100 py-12">
+        <article className="min-h-layout bg-base-100 py-12">
             <div className="max-w-3xl mx-auto px-4">
                 <header className="mb-12 text-center">
                     <h1 className="text-5xl font-bold mb-6 text-accent">

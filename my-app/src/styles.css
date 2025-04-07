@@ -7,3 +7,24 @@
         light,
         cyberpunk;
 }
+
+@layer base {
+    :root {
+        --header-height: 65px;
+        --footer-height: 88px;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+        color: var(--color-base-content);
+        opacity: 0.9;
+    }
+
+    @media (min-width: 768px) {
+        .min-h-layout {
+            min-height: calc(
+                100vh - var(--header-height) - var(--footer-height)
+            );
+        }
+    }
+}
