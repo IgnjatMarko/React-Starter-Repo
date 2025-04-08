@@ -16,6 +16,7 @@ import PostComponent from './pages/post'
 import RoadmapComponent from './pages/roadmap'
 import LoginComponent from './pages/login'
 import RegisterComponent from './pages/register'
+import AdminComponent from './pages/admin'
 import NotFoundComponent from './pages/404'
 
 import './styles.css'
@@ -58,6 +59,12 @@ const registerRoute = createRoute({
     component: RegisterComponent,
 })
 
+const adminRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/admin',
+    component: AdminComponent,
+})
+
 const aboutRoute = createRoute({
     getParentRoute: () => rootRoute,
     path: '/about',
@@ -92,6 +99,7 @@ const routeTree = rootRoute.addChildren([
     indexRoute,
     loginRoute,
     registerRoute,
+    adminRoute,
     aboutRoute,
     blogRoute,
     postRoute,

@@ -91,7 +91,7 @@ export const Signup = () => {
             </div>
 
             {toast && (
-                <div className="toast toast-bottom toast-middle">
+                <div className="toast toast-center">
                     <div
                         className={`alert ${
                             toast.type === 'error'

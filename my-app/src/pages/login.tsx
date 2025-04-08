@@ -4,7 +4,7 @@ import { account } from '../lib/appwrite'
 import { useAuth } from '../context/AuthContext'
 
 export default function LoginComponent() {
-    const { setIsLoggedIn } = useAuth() // Use global authentication state
+    const { setIsLoggedIn, checkUserRole } = useAuth() // Use global authentication state
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [error, setError] = useState<string | null>(null)
@@ -15,6 +15,8 @@ export default function LoginComponent() {
         try {
             await account.createEmailPasswordSession(email, password) // Create session
             setIsLoggedIn(true) // Update global login state
+            // Check user role after successful login
+            await checkUserRole()
             setError(null) // Clear any previous errors
             navigate({ to: '/' }) // Redirect to homepage
         } catch (err: any) {
@@ -23,8 +25,8 @@ export default function LoginComponent() {
     }
 
     return (
-        <div className="hero bg-base-100 min-h-layout">
-            <div className="hero-content flex-col lg:flex-row-reverse">
+        <div className="hero bg-base-100 min-h-layout max-h-layout">
+            <div className="hero-content flex-col lg:flex-row-reverse my-20">
                 <div className="card bg-base-100 w-96 shrink-0 card-border shadow-2xl">
                     <div className="card-body">
                         <h2 className="text-2xl font-bold mb-4">Login</h2>

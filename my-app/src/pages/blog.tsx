@@ -1,5 +1,5 @@
 import { STARTER_DB_ID, BLOGSPOT_ID, database } from '../lib/appwrite'
-import { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { Models, Query } from 'appwrite'
 import { Link } from '@tanstack/react-router'
 import { format } from 'date-fns'
@@ -26,36 +26,25 @@ const truncateText = (text: string, maxLength: number = 300) => {
     return plainText.slice(0, maxLength).trim() + '...'
 }
 
+// Fetch function for blog posts
+const fetchBlogPosts = async () => {
+    const response = await database.listDocuments<BlogPost>(
+        STARTER_DB_ID,
+        BLOGSPOT_ID,
+        [Query.limit(10)]
+    )
+    return response.documents
+}
+
 export default function BlogComponent() {
-    const [posts, setPosts] = useState<BlogPost[]>([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState<string | null>(null)
+    const { data: posts, isLoading, error } = useQuery({
+        queryKey: ['blog-posts'],
+        queryFn: fetchBlogPosts,
+    })
 
-    useEffect(() => {
-        fetchPosts()
-    }, [])
-
-    const fetchPosts = async () => {
-        try {
-            const response = await database.listDocuments<BlogPost>(
-                STARTER_DB_ID,
-                BLOGSPOT_ID,
-                [Query.limit(10)]
-            )
-            setPosts(response.documents)
-        } catch (err) {
-            const errorMessage =
-                err instanceof Error ? err.message : 'An unknown error occurred'
-            console.error('Error fetching posts:', err)
-            setError(errorMessage)
-        } finally {
-            setLoading(false)
-        }
-    }
-
-    if (loading) {
+    if (isLoading) {
         return (
-            <div className="min-h-[82vh] flex items-center justify-center">
+            <div className="min-h-layout flex items-center justify-center">
                 <div className="loading loading-spinner loading-lg"></div>
             </div>
         )
@@ -63,9 +52,9 @@ export default function BlogComponent() {
 
     if (error) {
         return (
-            <div className="min-h-[82vh] flex items-center justify-center">
+            <div className="min-h-layout flex items-center justify-center">
                 <div className="alert alert-error">
-                    <span>Error loading blog posts: {error}</span>
+                    <span>Error loading blog posts: {error.message}</span>
                 </div>
             </div>
         )
@@ -77,9 +66,9 @@ export default function BlogComponent() {
                 <h1 className="text-5xl font-bold text-center mb-16 text-accent">
                     Blogspot
                 </h1>
-                {posts.length > 0 ? (
+                {(posts?.length ?? 0) > 0 ? (
                     <div className="space-y-10">
-                        {posts.map((post) => (
+                        {(posts ?? []).map((post) => (
                             <div
                                 key={post.$id}
                                 className="card bg-base-200 shadow-xl hover:shadow-2xl transition-shadow duration-300"

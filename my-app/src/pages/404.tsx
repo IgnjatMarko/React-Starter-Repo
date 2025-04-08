@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router'
 
 export default function NotFoundComponent() {
     return (
-        <div className="hero bg-base-100 min-h-layout">
+        <div className="hero bg-base-100 min-h-layout max-h-layout">
             <div className="hero-content text-center">
                 <div className="max-w-md">
                     <h1 className="text-5xl font-bold">Oops!</h1>

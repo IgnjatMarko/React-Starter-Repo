@@ -7,7 +7,7 @@ import LightComponent, { CyberpunkComponent } from '../utils/themes'
 import { ArrowDown } from 'lucide-react'
 
 export default function HeaderComponent() {
-    const { isLoggedIn, setIsLoggedIn } = useAuth()
+    const { isLoggedIn, setIsLoggedIn, isAdmin, checkUserRole } = useAuth()
 
     const handleLogout = async () => {
         try {
@@ -18,18 +18,9 @@ export default function HeaderComponent() {
         }
     }
 
-    const checkLoginStatus = async () => {
-        try {
-            const user = await account.get() // Check if the user is logged in
-            setIsLoggedIn(!!user) // Update state based on login status
-        } catch {
-            setIsLoggedIn(false) // If no user is logged in, set to false
-        }
-    }
-
-    // Check login status when the component mounts
+    // Check login status and user role when the component mounts
     useEffect(() => {
-        checkLoginStatus()
+        checkUserRole()
     }, [])
 
     return (
@@ -70,9 +61,16 @@ export default function HeaderComponent() {
                                 className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
                             >
                                 {isLoggedIn ? (
-                                    <li>
-                                        <a onClick={handleLogout}>Log Out</a>
-                                    </li>
+                                    <>
+                                        {isAdmin && (
+                                            <li>
+                                                <Link to="/admin">Dashboard</Link>
+                                            </li>
+                                        )}
+                                        <li>
+                                            <a onClick={handleLogout}>Log Out</a>
+                                        </li>
+                                    </>
                                 ) : (
                                     <>
                                         <li>

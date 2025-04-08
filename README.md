@@ -124,6 +124,7 @@ Make sure not to commit your `.env` file to version control to keep sensitive in
 ## Tips
 
 Do not forget to run scripts `npm run lint` and `npm run format` to check your code and format it.
+And, check EXTRAS.md for more features!
 
 ## Build and Deployment
 

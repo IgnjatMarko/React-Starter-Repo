@@ -20,12 +20,29 @@ export default function RegisterComponent() {
     }
 
     return (
-        <div className="hero bg-base-100 min-h-layout">
-            {error && <p className="text-red-500">{error}</p>}
+        <div className="hero bg-base-100 min-h-layout max-h-layout">
             <div className="hero-content flex-col lg:flex-row-reverse">
                 <div className="card bg-base-100 w-96 shrink-0 card-border shadow-2xl">
                     <div className="card-body">
                         <h2 className="text-2xl font-bold mb-4">Register</h2>
+                        {error && (
+                            <div role="alert" className="alert alert-error">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-6 w-6 shrink-0 stroke-current"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    />
+                                </svg>
+                                <span>{error}</span>
+                            </div>
+                        )}
                         <fieldset className="fieldset">
                             <label className="fieldset-label">Name</label>
                             <input
