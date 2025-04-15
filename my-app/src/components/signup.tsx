@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { STARTER_DB_ID, SUBSCRIBERS_ID, database, ID } from '../lib/appwrite'
+import { CornerDownLeft } from 'lucide-react'
 
 export const Signup = () => {
     const [email, setEmail] = useState<string>('')
@@ -75,7 +76,7 @@ export const Signup = () => {
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Newsletter subscription"
+                            placeholder="Join Waitlist"
                             className="w-full"
                             required
                         />
@@ -86,7 +87,7 @@ export const Signup = () => {
                     onClick={handleSubmit}
                     disabled={!email.trim()}
                 >
-                    Join
+                    <CornerDownLeft className="h-4 w-4" />
                 </button>
             </div>
 

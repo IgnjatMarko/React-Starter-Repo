@@ -13,11 +13,11 @@ export const LogoCloud = [
     },
     {
         name: 'Oxlint',
-        logo: 'https://cloud.appwrite.io/v1/storage/buckets/67f552db003a3713332d/files/67f5540f002841381d68/view?project=67dfe00f0037c42a6d34&mode=admin'
+        logo: 'https://svgl.app/library/oxc.svg'
     },
     {
         name: 'Prettier',
-        logo: 'https://cdn.brandfetch.io/idiUHgw-fJ/w/256/h/256/theme/dark/logo.png?c=1dxbfHSJFAPEGdCLU4o5B'
+        logo: 'https://svgl.app/library/prettier-icon-dark.svg'
     },
     {
         name: 'Lucide',
