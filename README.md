@@ -1,4 +1,4 @@
-# React Starter Repo v1.2.0
+# React Starter Repo v1.3.0
 
 Welcome to the React Starter Repo! This repository provides a boilerplate setup for starting your React projects quickly and efficiently.
 
@@ -11,6 +11,7 @@ Welcome to the React Starter Repo! This repository provides a boilerplate setup 
 - **Appwrite**: Build your entire backend within minutes and scale effortlessly using Appwrite's platform.
 - **Oxlint/Prettier**: Code linting and formatting tools.
 - **Lucide**: Beautiful & consistent icons. Made by the community.
+- **Brevo**: Email marketing and newsletter service.
 
 ## Getting Started
 

@@ -5,7 +5,11 @@
     1. `import { inject } from '@vercel/analytics'`
     2. `inject()`
 
-## Subcribers list && Newsletter
- - Create a new collection in Appwrite's database "Subscribers".
- - And collect emails from Users interested in your product.
- - Do not forget to update Environment Variables!
+## Waitlist && Newsletter
+- You can use Brevo (formerly Sendinblue) to collect newsletter subscribers with a hosted form.
+- The recommended approach is to use the Brevo form link in a popup window. Example:
+  - Use a button in your app that opens the Brevo form in a new window:
+    ```js
+    window.open('https://sibforms.com/link');
+    ```
+- Choose standard form instead of pop up form. It does not play nice with React ecosystem.

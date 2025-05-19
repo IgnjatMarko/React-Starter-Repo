@@ -1,111 +1,22 @@
-import { useState } from 'react'
-import { STARTER_DB_ID, SUBSCRIBERS_ID, database, ID } from '../lib/appwrite'
 import { CornerDownLeft } from 'lucide-react'
 
 export const Signup = () => {
-    const [email, setEmail] = useState<string>('')
-    const [toast, setToast] = useState<{
-        type: 'info' | 'success' | 'error'
-        message: string
-    } | null>(null)
-
-    const validateEmail = (email: string) => {
-        const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/
-        return regex.test(email)
-    }
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-        if (!validateEmail(email)) {
-            setToast({
-                type: 'error',
-                message: 'Please enter a valid email address',
-            })
-            setTimeout(() => setToast(null), 3000)
-            return
-        }
-
-        try {
-            setToast({ type: 'info', message: 'Subscribing...' })
-            await database.createDocument(
-                STARTER_DB_ID,
-                SUBSCRIBERS_ID,
-                ID.unique(),
-                { email }
-            )
-            setToast({ type: 'success', message: 'Successfully subscribed!' })
-            setEmail('')
-        } catch (error) {
-            console.error('Error subscribing:', error)
-            setToast({
-                type: 'error',
-                message: 'Failed to subscribe. Please try again.',
-            })
-        }
-        setTimeout(() => setToast(null), 3000)
-    }
+    const handleClick = () => {
+        const width = 600;
+        const height = 700;
+        const left = window.screenX + (window.outerWidth - width) / 2;
+        const top = window.screenY + (window.outerHeight - height) / 2;
+        window.open(
+            'https://sibforms.com/serve/MUIFAM8fUMXiKc8Vn0vIEi40ZjEmpJcxl5KwZisLXqKciGkSsV8jeHMyGQjqZdaEFM5GvJUXLElrgukAyj0Au5QgoOUzjJDVtAjf-Y3QleKJ-ik6SxoP3yl2FBmIYLSIp34f19IrpXXJrAeL1O8ymzjSY9FB4jwbv_Z60ujzXqHdADMc0KRy47UjF7cq1KYtUTpWsY-Y1U-vu35C',
+            '_blank',
+            `noopener,noreferrer,width=${width},height=${height},left=${left},top=${top}`
+        );
+    };
 
     return (
-        <>
-            <div className="join">
-                <div>
-                    <label className="input join-item">
-                        <svg
-                            className="h-[1em] opacity-50"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                        >
-                            <g
-                                strokeLinejoin="round"
-                                strokeLinecap="round"
-                                strokeWidth="2.5"
-                                fill="none"
-                                stroke="currentColor"
-                            >
-                                <rect
-                                    width="20"
-                                    height="16"
-                                    x="2"
-                                    y="4"
-                                    rx="2"
-                                ></rect>
-                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                            </g>
-                        </svg>
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Join Waitlist"
-                            className="w-full"
-                            required
-                        />
-                    </label>
-                </div>
-                <button
-                    className="btn btn-primary join-item"
-                    onClick={handleSubmit}
-                    disabled={!email.trim()}
-                >
-                    <CornerDownLeft className="h-4 w-4" />
-                </button>
-            </div>
-
-            {toast && (
-                <div className="toast toast-center">
-                    <div
-                        className={`alert ${
-                            toast.type === 'error'
-                                ? 'alert-error'
-                                : toast.type === 'success'
-                                  ? 'alert-success'
-                                  : 'alert-info'
-                        }`}
-                    >
-                        <span>{toast.message}</span>
-                    </div>
-                </div>
-            )}
-        </>
-    )
+        <button className="btn btn-primary" onClick={handleClick}>
+            Join Waitlist
+            <CornerDownLeft />
+        </button>
+    );
 }

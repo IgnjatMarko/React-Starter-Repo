@@ -12,7 +12,7 @@ export const APP_INFO: AppInfo = {
     short_name: 'my-app',
     description:
         'React starter repository with an interactive roadmap page, Appwrite backend, and typesafe TanStack Router.',
-    author: 'Ignjat Marko',
+    author: 'Marko Kuba',
     email: 'marko@gro-build.com',
     website: 'https://markoreact.pages.dev',
 }
